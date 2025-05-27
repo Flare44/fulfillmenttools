@@ -1,6 +1,7 @@
 package de;
 
 import java.io.IOException;
+import java.util.List;
 
 import static de.Core.Facilities.Facility.createFacility;
 import static de.Core.Facilities.Facility.deleteFacility;
@@ -9,6 +10,7 @@ import static de.InventoryManagement.Inbound.InboundProcess.deleteInboundProcess
 import static de.InventoryManagement.Inbound.PurchaseOrder.createPurchaseOrderForExistingInboundProcessAndFacility;
 import static de.InventoryManagement.Inbound.Receipt.addReceiptToExistingInboundProcessAndFacility;
 import static de.InventoryManagement.Inbound.Receipt.deleteReceipt;
+import static de.InventoryManagement.Stocks.Stock.checkIfStockWasCreatedForItem;
 import static de.Utils.printAPIToken;
 
 public class Main {
@@ -23,5 +25,6 @@ public class Main {
 //        createPurchaseOrderForExistingInboundProcessAndFacility("d9c4be9d-b3c5-4f8d-92e2-83a4eba2117a", "8a76c4de-1d3c-4ef3-b7fe-bbcb82b14a1c");
 //        addReceiptToExistingInboundProcessAndFacility("d9c4be9d-b3c5-4f8d-92e2-83a4eba2117a", "8a76c4de-1d3c-4ef3-b7fe-bbcb82b14a1c");
 //        deleteReceipt("341600fb-d844-4ba3-8bbb-688ac989bcdb", "3");
+        checkIfStockWasCreatedForItem("8a76c4de-1d3c-4ef3-b7fe-bbcb82b14a1c", "Article_3");
     }
 }

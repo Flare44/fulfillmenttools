@@ -46,9 +46,4 @@ public class PurchaseOrder {
 
         // Liste mit items und dann JSON generieren
     }
-
-    // TODO: Vielleicht später
-    public static void setPurchaseOrderToCancelled(String purchaseOrderId) {
-        String apiEndpoint = API_BASE_URL + "/api/purchaseorders";
-    }
 }
