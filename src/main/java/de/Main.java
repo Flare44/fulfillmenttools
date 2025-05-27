@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
@@ -13,7 +14,39 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 //        createFacility();
-        createInboundProcess();
+//        createInboundProcess();
+//        deleteInboundProcess("81139f31-9f8e-422c-bc86-55cc39c08b41");
+//        printAuthToken();
+        deleteFacility("15b96e33-d631-418d-9411-9fadbbdd3ea7");
+    }
+
+
+    private static void printAuthToken() throws IOException {
+        String url = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" + System.getenv("AUTH_KEY");
+        HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+        connection.setRequestMethod("POST");
+        connection.setRequestProperty("Content-Type", "application/json");
+        connection.setDoOutput(true);
+
+        String body = """
+                {
+                    "email": "%s",
+                    "password": "%s",
+                    "returnSecureToken": true
+                }
+                """.formatted(System.getenv("LOGIN"), System.getenv("PASSWORD"));
+
+        try (OutputStream outputStream = connection.getOutputStream()) {
+            outputStream.write(body.getBytes(StandardCharsets.UTF_8));
+        }
+
+        int httpResponseCode = connection.getResponseCode();
+        System.out.println(httpResponseCode);
+
+        try (InputStream inputStream = (httpResponseCode == 200 || httpResponseCode == 201) ? connection.getInputStream() : connection.getErrorStream()) {
+            String response = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
+            System.out.println(response);
+        }
     }
 
 
@@ -44,9 +77,13 @@ public class Main {
                 }
                 """;
 
-        sendPostRequest(apiEndpoint, body);
+        sendHttpRequest(apiEndpoint, body, "POST");
     }
 
+    private static void deleteFacility(String facilityId) throws IOException {
+        String apiEndpoint = API_BASE_URL + "/api/facilities/" + facilityId + "?forceDeletion=true";
+        sendHttpRequest(apiEndpoint, "", "DELETE");
+    }
 
 
     /*
@@ -107,14 +144,20 @@ public class Main {
                 }
                 """;
 
-        sendPostRequest(apiEndpoint, body);
+        sendHttpRequest(apiEndpoint, body, "POST");
+    }
+
+    private static void deleteInboundProcess(String inboundProcessId) throws IOException {
+        String apiEndpoint = API_BASE_URL + "/api/inboundprocesses/" + inboundProcessId;
+        sendHttpRequest(apiEndpoint, "", "DELETE");
     }
 
 
-    private static void sendPostRequest(String url, String body) throws IOException {
+
+    private static void sendHttpRequest(String url, String body, String httpVerb) throws IOException {
         HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
-        connection.setRequestMethod("POST");
-        connection.setRequestProperty("Authorization", "Bearer " + System.getenv("AUTH_KEY"));
+        connection.setRequestMethod(httpVerb);
+        connection.setRequestProperty("Authorization", "Bearer " + System.getenv("API_KEY"));
         connection.setRequestProperty("Content-Type", "application/json");
         connection.setDoOutput(true);
 
