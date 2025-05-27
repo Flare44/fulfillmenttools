@@ -41,10 +41,12 @@ public class Utils {
         connection.setRequestMethod(httpVerb);
         connection.setRequestProperty("Authorization", "Bearer " + System.getenv("API_KEY"));
         connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-        connection.setDoOutput(true);
+        if(!httpVerb.equals("GET")) {
+            connection.setDoOutput(true);
 
-        try (OutputStream outputStream = connection.getOutputStream()) {
-            outputStream.write(body.getBytes(StandardCharsets.UTF_8));
+            try (OutputStream outputStream = connection.getOutputStream()) {
+                outputStream.write(body.getBytes(StandardCharsets.UTF_8));
+            }
         }
 
         int httpResponseCode = connection.getResponseCode();

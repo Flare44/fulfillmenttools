@@ -11,6 +11,7 @@ import static de.InventoryManagement.Inbound.PurchaseOrder.createPurchaseOrderFo
 import static de.InventoryManagement.Inbound.Receipt.addReceiptToExistingInboundProcessAndFacility;
 import static de.InventoryManagement.Inbound.Receipt.deleteReceipt;
 import static de.InventoryManagement.Stocks.Stock.checkIfStockWasCreatedForItem;
+import static de.InventoryManagement.Stocks.Stock.deleteStock;
 import static de.Utils.printAPIToken;
 
 public class Main {
@@ -24,7 +25,8 @@ public class Main {
 //        deleteFacility("15b96e33-d631-418d-9411-9fadbbdd3ea7");
 //        createPurchaseOrderForExistingInboundProcessAndFacility("d9c4be9d-b3c5-4f8d-92e2-83a4eba2117a", "8a76c4de-1d3c-4ef3-b7fe-bbcb82b14a1c");
 //        addReceiptToExistingInboundProcessAndFacility("d9c4be9d-b3c5-4f8d-92e2-83a4eba2117a", "8a76c4de-1d3c-4ef3-b7fe-bbcb82b14a1c");
-//        deleteReceipt("341600fb-d844-4ba3-8bbb-688ac989bcdb", "3");
-        checkIfStockWasCreatedForItem("8a76c4de-1d3c-4ef3-b7fe-bbcb82b14a1c", "Article_3");
+//        deleteReceipt("fedafe42-f300-4a29-8c81-966763e2ed51", "9");
+//        checkIfStockWasCreatedForItem("Article_3");
+//        deleteStock("b7d926bc-a513-46ae-82ec-18ec90f73395");
     }
 }

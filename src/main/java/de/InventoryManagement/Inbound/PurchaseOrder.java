@@ -43,7 +43,5 @@ public class PurchaseOrder {
                 """.formatted(facilityId);
 
         sendHttpRequest(apiEndpoint, body, "PUT");
-
-        // Liste mit items und dann JSON generieren
     }
 }

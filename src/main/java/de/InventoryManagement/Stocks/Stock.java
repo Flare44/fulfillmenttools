@@ -9,24 +9,16 @@ import static de.Utils.sendHttpRequest;
 public class Stock {
 
     /*
-    201
-    {"created":"2025-05-27T17:16:14.178Z","facilityRef":"8a76c4de-1d3c-4ef3-b7fe-bbcb82b14a1c","id":"b7d926bc-a513-46ae-82ec-18ec90f73395","lastModified":"2025-05-27T17:16:14.178Z","tenantArticleId":"Article_3","value":100,"scannableCodes":[],"scores":[{"type":"RATING","name":"RECEIPT_DATE","value":2775}],"reserved":0,"facilityWideReserved":0,"available":100,"traits":["PICKABLE","ACCESSIBLE"],"properties":{},"serializedProperties":"{}","receiptDate":"2025-05-27T17:16:14.172Z","version":1}
-     */
-    public static void checkIfStockWasCreatedForItem(String facilityId, String articleId) throws IOException {
-        StringBuilder apiEndpointBuilder = new StringBuilder(API_BASE_URL + "/api/stocks"); //?
-//        articleIds.forEach(articleId -> {
-//            apiEndpointBuilder.append("tenantArticleId=").append(articleId).append("&");
-//        });
-//        apiEndpointBuilder.deleteCharAt(apiEndpointBuilder.length() - 1); // letztes '&' wieder entfernen
+    200
+    {"total":1,"stocks":[{"created":"2025-05-27T17:15:30.303Z","facilityRef":"8a76c4de-1d3c-4ef3-b7fe-bbcb82b14a1c","id":"a98a450c-39f6-4bd7-9b29-c963f968a634","lastModified":"2025-05-27T17:15:30.303Z","tenantArticleId":"Article_3","value":1,"locationRef":null,"scannableCodes":[],"scores":[{"type":"RATING","name":"RECEIPT_DATE","value":2775}],"tenantStockId":null,"reserved":0,"facilityWideReserved":0,"available":1,"traits":["PICKABLE","ACCESSIBLE"],"traitConfig":null,"conditions":null,"properties":{},"serializedProperties":"{}","receiptDate":"2025-05-27T17:15:30.282Z","version":1,"customAttributes":null,"availableUntil":null}]}
+    */
+    public static void checkIfStockWasCreatedForItem(String articleId) throws IOException {
+        String apiEndpoint = API_BASE_URL + "/api/stocks?tenantArticleId=" + articleId;
+        sendHttpRequest(apiEndpoint, "", "GET");
+    }
 
-        String body = """
-                {
-                    "facilityRef": "%s",
-                    "tenantArticleId": "%s",
-                    "value": 100
-                }
-                """.formatted(facilityId, articleId);
-
-        sendHttpRequest(apiEndpointBuilder.toString(), body, "GET");
+    public static void deleteStock(String stockId) throws IOException {
+        String apiEndpoint = API_BASE_URL + "/api/stocks/" + stockId;
+        sendHttpRequest(apiEndpoint, "", "DELETE");
     }
 }
